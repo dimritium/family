@@ -1,7 +1,3 @@
-require("@babel/core").transform("code", {
-    plugins: ["@babel/plugin-proposal-private-methods"],
-  });
-
 const { Operations } = require('./service/operations')
 global.LOG = console.log;
 
