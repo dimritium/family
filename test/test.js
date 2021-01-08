@@ -1,7 +1,7 @@
 let assert = require('assert');
 
 const { Operations } = require('../service/operations')
-global.LOG = () => {}; //disable logging
+global.LOG = () => { }; //disable logging
 
 function init() {
     let op;
@@ -79,7 +79,6 @@ describe('FamilyTree', () => {
         it('should return "NONE" for Kriya Brother-In-Law', () => {
             assert.strictEqual(ft.getRelationship("Kriya", "Brother-In-Law"), "NONE")
         });
-        
     });
     describe('AddChild', () => {
         it('should return CHILD_ADDITION_SUCCEEDED for Amba', () => {
@@ -106,7 +105,6 @@ describe('FamilyTree', () => {
         it('should return "Atya Yaya" for Satvy Sister-In-Law', () => {
             assert.strictEqual(ft.getRelationship("Satvy", "Sister-In-Law"), "Atya Yaya")
         });
-
     })
 });
 

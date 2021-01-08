@@ -33,7 +33,7 @@ class FamilyTree {
         if (parent) {
             if (parent.gender === Gender.male || !parent.spouse) {
                 result = "CHILD_ADDITION_FAILED"
-                
+
             } else {
                 parent.children.push(child);
                 parent.spouse.children.push(child);
@@ -104,7 +104,7 @@ class FamilyTree {
                 return;
             }
         }
-        
+
         for (let descendent of root.children) {
             let foundNode = this.#findSpouse(descendent, spouseName);
             if (foundNode) {
@@ -202,10 +202,10 @@ class FamilyTree {
                                 related.push(child.spouse.name);
                             }
                         }
-                    } else if(person.spouse && person.spouse.parent) {
+                    } else if (person.spouse && person.spouse.parent) {
                         let parent = person.spouse.parent.father;
-                        for(let child of parent.children) {
-                            if(child.name !== person.spouse.name && child.gender === genderCheck) {
+                        for (let child of parent.children) {
+                            if (child.name !== person.spouse.name && child.gender === genderCheck) {
                                 related.push(child.name);
                             }
                         }
