@@ -73,6 +73,13 @@ describe('FamilyTree', () => {
         it('should return PERSON_NOT_FOUND for Pjali Son', () => {
             assert.strictEqual(ft.getRelationship("Pjali", "Son"), "PERSON_NOT_FOUND")
         });
+        it('should return "Vyas" for Satvy Brother-In-Law', () => {
+            assert.strictEqual(ft.getRelationship("Satvy", "Brother-In-Law"), "Vyas")
+        });
+        it('should return "NONE" for Kriya Brother-In-Law', () => {
+            assert.strictEqual(ft.getRelationship("Kriya", "Brother-In-Law"), "NONE")
+        });
+        
     });
     describe('AddChild', () => {
         it('should return CHILD_ADDITION_SUCCEEDED for Amba', () => {
@@ -92,6 +99,12 @@ describe('FamilyTree', () => {
         });
         it('should return "Jnki Ahit" for Aria Siblings', () => {
             assert.strictEqual(ft.getRelationship("Aria", "Siblings"), "Jnki Ahit")
+        });
+        it('should return CHILD_ADDITION_SUCCEEDED for Satya', () => {
+            assert.strictEqual(ft.addChild("Satya", "Yaya", "Female"), "CHILD_ADDITION_SUCCEEDED");
+        });
+        it('should return "Atya Yaya" for Satvy Sister-In-Law', () => {
+            assert.strictEqual(ft.getRelationship("Satvy", "Sister-In-Law"), "Atya Yaya")
         });
 
     })

@@ -202,6 +202,13 @@ class FamilyTree {
                                 related.push(child.spouse.name);
                             }
                         }
+                    } else if(person.spouse && person.spouse.parent) {
+                        let parent = person.spouse.parent.father;
+                        for(let child of parent.children) {
+                            if(child.name !== person.spouse.name && child.gender === genderCheck) {
+                                related.push(child.name);
+                            }
+                        }
                     }
                     break;
                 case "Son":
