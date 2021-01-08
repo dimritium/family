@@ -5,11 +5,23 @@
   "main": "geektrust.js",
   "scripts": {
     "test": "mocha",
-    "start": "node geektrust.js"
+    "start": "babel-node geektrust.js"
   },
-  "author": "",
+  "author": "Shubhankar Dimri",
   "license": "ISC",
   "devDependencies": {
+    "@babel/cli": "^7.12.10",
+    "@babel/core": "^7.12.10",
+    "@babel/node": "^7.12.10",
+    "@babel/plugin-proposal-private-methods": "^7.12.1",
+    "@babel/preset-env": "^7.12.11",
+    "@babel/register": "^7.12.10",
+    "babel-core": "^6.26.3",
+    "babel-preset-latest-node": "^5.2.0",
     "mocha": "^8.2.1"
+  },
+  "dependencies": {
+    "core-js": "^3.8.2",
+    "regenerator-runtime": "^0.13.7"
   }
 }
