@@ -17,7 +17,7 @@ class Operations {
     get familyTree() {
         return this.#familyTree;
     }
-    
+
     /**
      * This method takes in filepath and executes the callback after parsing the file
      * @param {fs.PathLike} filepath 
@@ -26,14 +26,14 @@ class Operations {
     async readFile(filepath, callback) {
         const readStream = fs.createReadStream(filepath);
 
-        const rl = readline.createInterface({
+        const readLine = readline.createInterface({
             input: readStream,
             crlfDelay: Infinity
         });
-        
-        for await(const line of rl) {
-            if(line) {
-                const [operation, target, name, gender] = line.split(" "); 
+
+        for await (const line of readLine) {
+            if (line) {
+                const [operation, target, name, gender] = line.split(" ");
                 callback(operation, target, name, gender);
             }
         }
@@ -46,7 +46,7 @@ class Operations {
      */
     async executeFile(filepath) {
         await this.readFile(filepath, (operation, target, name, gender) => {
-            switch(operation) {
+            switch (operation) {
                 case "ADD_CHILD":
                     this.familyTree.addChild(target, name, gender);
                     break;
@@ -59,8 +59,8 @@ class Operations {
             }
         })
     }
-    
-}             
+
+}
 
 module.exports = {
     Operations

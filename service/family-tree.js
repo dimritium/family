@@ -243,38 +243,6 @@ class FamilyTree {
         LOG(result);
         return result;
     }
-
-    /**
-     * Displays a rough sketch of the family tree
-     */
-    displayFamilyTree() {
-        LOG(`king: ${this.#root.father.name}, queen: ${this.#root.mother.name}\n ---Decendents---`)
-        this.#displayHelper(this.#root.mother);
-    }
-
-    #displayHelper(root) {
-        if (!root || root.children.length === 0) {
-            return;
-        }
-
-        let queue = [];
-        for (let child of root.children) {
-            process.stdout.write(`
-                ${child.name}: { 
-                    Spouse:  ${child.spouse ? child.spouse.name : "-none-"}, 
-                    father: ${child.parent.father.name}, 
-                    mother: ${child.parent.mother.name} 
-                }`
-            );
-
-            if (child.children.length > 0)
-                queue.push(child);
-        }
-        LOG("\n\t\t\t---xxx---\n");
-        while (queue.length > 0) {
-            this.#displayHelper(queue.shift());
-        }
-    }
 }
 
 module.exports = {

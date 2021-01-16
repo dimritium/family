@@ -88,7 +88,7 @@ describe('Testing FamilyTree', () => {
         });
         it('should return CHILD_ADDITION_FAILED for Asva', () => {
             assert.strictEqual(ft.addChild("Asva", "Vani", "Female"), "CHILD_ADDITION_FAILED");
-        });      
+        });
     });
     describe('getRelationship() after addChild()', () => {
         it('should return CHILD_ADDITION_SUCCEEDED for Chitra', () => {
