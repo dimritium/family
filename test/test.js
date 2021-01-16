@@ -4,21 +4,20 @@ const { Operations } = require('../service/operations')
 global.LOG = () => { }; //disable logging
 
 function init() {
-    let op;
+    let operation;
     try {
-        op = new Operations();
-        op.executeFile('./resources/init.txt');
+        operation = new Operations("Shan", "Anga");
+        operation.executeFile('./resources/init.txt');
     } catch (err) {
         console.trace(err);
     }
-    return op;
+    return operation;
 }
 
 let ft = init().familyTree;
-console.log(ft.getRelationship("Aria", "Siblings"));
 
-describe('FamilyTree', () => {
-    describe('GetRelationship', () => {
+describe('Testing FamilyTree', () => {
+    describe('getRelationship()', () => {
         it('should return PERSON_NOT_FOUND when the person is not present', () => {
             assert.strictEqual(ft.getRelationship("Aria", "Siblings"), "PERSON_NOT_FOUND")
         });
@@ -80,7 +79,7 @@ describe('FamilyTree', () => {
             assert.strictEqual(ft.getRelationship("Kriya", "Brother-In-Law"), "NONE")
         });
     });
-    describe('AddChild', () => {
+    describe('addChild()', () => {
         it('should return CHILD_ADDITION_SUCCEEDED for Amba', () => {
             assert.strictEqual(ft.addChild("Amba", "Tron", "Male"), "CHILD_ADDITION_SUCCEEDED");
         });
@@ -89,7 +88,9 @@ describe('FamilyTree', () => {
         });
         it('should return CHILD_ADDITION_FAILED for Asva', () => {
             assert.strictEqual(ft.addChild("Asva", "Vani", "Female"), "CHILD_ADDITION_FAILED");
-        });
+        });      
+    });
+    describe('getRelationship() after addChild()', () => {
         it('should return CHILD_ADDITION_SUCCEEDED for Chitra', () => {
             assert.strictEqual(ft.addChild("Chitra", "Aria", "Female"), "CHILD_ADDITION_SUCCEEDED");
         });

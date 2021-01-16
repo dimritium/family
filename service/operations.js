@@ -5,8 +5,13 @@ const { FamilyTree } = require('./family-tree');
 class Operations {
     #familyTree;
 
-    constructor() {
-        this.#familyTree = new FamilyTree();
+    /**
+     * 
+     * @param {string} kingName 
+     * @param {string} queenName 
+     */
+    constructor(kingName, queenName) {
+        this.#familyTree = new FamilyTree(kingName, queenName); // Initializing the king and queen name
     }
 
     get familyTree() {

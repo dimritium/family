@@ -1,9 +1,9 @@
 const { Operations } = require('./service/operations')
 global.LOG = console.log;
 
-async function init(testFileLocation) {
+async function init(testFileLocation) { 
     try {
-        const op = new Operations();
+        const op = new Operations("Shan", "Anga");
         // initializing family tree
         LOG = () => {} // disable logging during initialization
         await op.executeFile('./resources/init.txt');

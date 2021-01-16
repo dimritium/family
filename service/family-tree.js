@@ -6,11 +6,12 @@ class FamilyTree {
 
     /**
      * @typedef {Object} FamilyTree
-     * @param {Parent} root 
+     * @param {string} kingName Name of the King
+     * @param {string} queenName Name of the Queen
      */
-    constructor() {
-        const king = new Person("Shan", Gender.male);
-        const queen = new Person("Anga", Gender.female);
+    constructor(kingName, queenName) {
+        const king = new Person(kingName, Gender.male);
+        const queen = new Person(queenName, Gender.female);
         king.spouse = queen;
         queen.spouse = king;
         this.#root = new Parent(king, queen);
@@ -27,7 +28,7 @@ class FamilyTree {
      * @param {string} gender 
      */
     addChild(motherName, childName, gender) {
-        let result = "";
+        let result = "PERSON_NOT_FOUND";
         let child = new Person(childName, gender);
         let parent = this.#findParent(this.#root.mother, motherName);
         if (parent) {
@@ -40,9 +41,8 @@ class FamilyTree {
                 child.parent = new Parent(parent.spouse, parent);
                 result = "CHILD_ADDITION_SUCCEEDED";
             }
-        } else {
-            result = "PERSON_NOT_FOUND";
         }
+
         LOG(result);
         return result;
     }
@@ -100,9 +100,7 @@ class FamilyTree {
             if (!root.spouse && root.name === spouseName) {
                 return root;
             }
-            else {
-                return;
-            }
+            return;
         }
 
         for (let descendent of root.children) {
@@ -122,9 +120,11 @@ class FamilyTree {
     #findPerson(root, name) {
         if (root.name === name)
             return root;
+
         if (root.spouse && root.spouse.name === name) {
             return root.spouse;
         }
+
         if (root.children.length === 0)
             return;
 
@@ -142,7 +142,7 @@ class FamilyTree {
      * Eg male would be returned for Paternal-Uncle
      * @param {string} relation 
      */
-    #relationGender(relation) {
+    #getRelationGender(relation) {
         let result = "";
         let temp = relation.split("-");
         if (temp.length > 1) {
@@ -163,10 +163,10 @@ class FamilyTree {
      * @param {string} relation 
      */
     getRelationship(name, relation) {
-        let result = "";
+        let result = "PERSON_NOT_FOUND";
         let related = [];
         let person = this.#findPerson(this.#root.mother, name);
-        let genderCheck = this.#relationGender(relation);
+        let genderCheck = this.#getRelationGender(relation);
         if (person) {
             switch (relation) {
                 case "Paternal-Uncle":
@@ -175,7 +175,8 @@ class FamilyTree {
                         let grandfather = person.parent.father.parent.father;
                         for (let child of grandfather.children) {
                             if (child.gender === genderCheck &&
-                                (child.name !== person.parent.father.name && child.name !== person.parent.mother.name)) {
+                                (child.name !== person.parent.father.name &&
+                                    child.name !== person.parent.mother.name)) {
                                 related.push(child.name);
                             }
                         }
@@ -187,7 +188,8 @@ class FamilyTree {
                         let grandmother = person.parent.mother.parent.mother;
                         for (let child of grandmother.children) {
                             if (child.gender === genderCheck &&
-                                (child.name !== person.parent.father.name && child.name !== person.parent.mother.name)) {
+                                (child.name !== person.parent.father.name &&
+                                    child.name !== person.parent.mother.name)) {
                                 related.push(child.name);
                             }
                         }
@@ -198,14 +200,16 @@ class FamilyTree {
                     if (person.parent) {
                         let parent = person.parent.father;
                         for (let child of parent.children) {
-                            if (child.spouse && (child.name !== person.name) && child.spouse.gender === genderCheck) {
+                            if (child.spouse && (child.name !== person.name) &&
+                                child.spouse.gender === genderCheck) {
                                 related.push(child.spouse.name);
                             }
                         }
                     } else if (person.spouse && person.spouse.parent) {
                         let parent = person.spouse.parent.father;
                         for (let child of parent.children) {
-                            if (child.name !== person.spouse.name && child.gender === genderCheck) {
+                            if (child.name !== person.spouse.name &&
+                                child.gender === genderCheck) {
                                 related.push(child.name);
                             }
                         }
@@ -231,18 +235,18 @@ class FamilyTree {
                     }
                     break;
             }
-            if (related.length > 0) {
+            result = "NONE";
+            if (related.length > 0)
                 result = related.join(" ");
-            } else {
-                result = "NONE";
-            }
-        } else {
-            result = "PERSON_NOT_FOUND";
         }
+
         LOG(result);
         return result;
     }
 
+    /**
+     * Displays a rough sketch of the family tree
+     */
     displayFamilyTree() {
         LOG(`king: ${this.#root.father.name}, queen: ${this.#root.mother.name}\n ---Decendents---`)
         this.#displayHelper(this.#root.mother);

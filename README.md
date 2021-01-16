@@ -13,4 +13,4 @@ Testing is being done using mocha.js
 ```
 npm test
 ```
-this will run the pre-performed tests in test.js file
+this will run the pre-performed tests in `test/test.js` file
