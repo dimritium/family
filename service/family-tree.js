@@ -158,6 +158,24 @@ class FamilyTree {
     }
 
     /**
+     * Checks Bother/Sister In-Laws
+     * @param {Person} person 
+     * @param {Person} child 
+     * @returns {string} Name of the brother/sister In-Laws
+     */
+    #getInLaws(person, child, genderCheck) {
+        if (((person.parent && child.spouse &&
+            child.name !== person.name &&
+            child.spouse.gender === genderCheck) ||
+            (person.spouse && person.spouse.parent &&
+                child.name !== person.spouse.name &&
+                child.gender === genderCheck))) {
+
+            return person.parent ? child.spouse.name : child.name;
+        }
+    }
+
+    /**
      * 
      * @param {string} name 
      * @param {string} relation 
@@ -171,12 +189,12 @@ class FamilyTree {
             switch (relation) {
                 case "Paternal-Uncle":
                 case "Paternal-Aunt":
-                    if (person.parent && person.parent.father.parent) {
-                        let grandfather = person.parent.father.parent.father;
-                        for (let child of grandfather.children) {
+                    if (person.parent && person.father.parent) {
+
+                        for (let child of person.grandFather.children) {
                             if (child.gender === genderCheck &&
-                                (child.name !== person.parent.father.name &&
-                                    child.name !== person.parent.mother.name)) {
+                                (child.name !== person.fatherName &&
+                                    child.name !== person.motherName)) {
                                 related.push(child.name);
                             }
                         }
@@ -184,12 +202,12 @@ class FamilyTree {
                     break;
                 case "Maternal-Uncle":
                 case "Maternal-Aunt":
-                    if (person.parent && person.parent.mother.parent) {
-                        let grandmother = person.parent.mother.parent.mother;
-                        for (let child of grandmother.children) {
+                    if (person.parent && person.mother.parent) {
+
+                        for (let child of person.grandMother.children) {
                             if (child.gender === genderCheck &&
-                                (child.name !== person.parent.father.name &&
-                                    child.name !== person.parent.mother.name)) {
+                                (child.name !== person.fatherName &&
+                                    child.name !== person.motherName)) {
                                 related.push(child.name);
                             }
                         }
@@ -197,23 +215,15 @@ class FamilyTree {
                     break;
                 case "Sister-In-Law":
                 case "Brother-In-Law":
-                    if (person.parent) {
-                        let parent = person.parent.father;
-                        for (let child of parent.children) {
-                            if (child.spouse && (child.name !== person.name) &&
-                                child.spouse.gender === genderCheck) {
-                                related.push(child.spouse.name);
-                            }
-                        }
-                    } else if (person.spouse && person.spouse.parent) {
-                        let parent = person.spouse.parent.father;
-                        for (let child of parent.children) {
-                            if (child.name !== person.spouse.name &&
-                                child.gender === genderCheck) {
-                                related.push(child.name);
-                            }
+                    if (person.parent || person.spouse) {
+                        let desiredParent = person.parent ? person.father : person.spouse.father;
+                        for (let child of desiredParent.children) {
+                            let inLaws = this.#getInLaws(person, child, genderCheck)
+                            if (inLaws)
+                                related.push(inLaws);
                         }
                     }
+
                     break;
                 case "Son":
                 case "Daughter":

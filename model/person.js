@@ -55,6 +55,34 @@ class Person {
     get children() {
         return this.#children;
     }
+
+    get father() {
+        return this.#parent.father;
+    }
+
+    get mother() {
+        return this.#parent.mother;
+    }
+
+    get fatherName() {
+        return this.#parent.father.name;
+    }
+
+    get motherName() {
+        return this.#parent.mother.name;
+    }
+
+    get grandFather() {
+        return this.#parent.father.father;
+    }
+
+    get grandMother() {
+        return this.#parent.mother.mother;
+    }
+
+    get grandParent() {
+        return this.#parent.father.parent;
+    }
 }
 
 const Gender = {
